@@ -13,6 +13,11 @@ struct ToggleImmersiveSpaceButton: View {
 
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    
+    enum Test<Success, Failure> where Failure: Error {
+        case success(Success)
+        case failure(Failure)
+    }
 
     var body: some View {
         Button {

@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		29FB0FE42DA539C2005036B2 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 29FB0FE32DA539C2005036B2 /* RealityKitContent */; };
+		29FB10412DAB04B1005036B2 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 29FB10402DAB04B1005036B2 /* RealityKitContent */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		29FB0FDE2DA539C2005036B2 /* WallArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WallArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		29FB0FE22DA539C2005036B2 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -41,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29FB10412DAB04B1005036B2 /* RealityKitContent in Frameworks */,
 				29FB0FE42DA539C2005036B2 /* RealityKitContent in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,7 +53,6 @@
 			isa = PBXGroup;
 			children = (
 				29FB0FE02DA539C2005036B2 /* WallArt */,
-				29FB0FE12DA539C2005036B2 /* Packages */,
 				29FB0FDF2DA539C2005036B2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,14 +63,6 @@
 				29FB0FDE2DA539C2005036B2 /* WallArt.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		29FB0FE12DA539C2005036B2 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				29FB0FE22DA539C2005036B2 /* RealityKitContent */,
-			);
-			path = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -94,6 +86,7 @@
 			name = WallArt;
 			packageProductDependencies = (
 				29FB0FE32DA539C2005036B2 /* RealityKitContent */,
+				29FB10402DAB04B1005036B2 /* RealityKitContent */,
 			);
 			productName = WallArt;
 			productReference = 29FB0FDE2DA539C2005036B2 /* WallArt.app */;
@@ -123,6 +116,9 @@
 			);
 			mainGroup = 29FB0FD52DA539C2005036B2;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				29FB103F2DAB04B1005036B2 /* XCLocalSwiftPackageReference "../../../../Downloads/GenerativeDoodleArt_VisionOS-main/Packages/RealityKitContent" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 29FB0FDF2DA539C2005036B2 /* Products */;
 			projectDirPath = "";
@@ -348,8 +344,19 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		29FB103F2DAB04B1005036B2 /* XCLocalSwiftPackageReference "../../../../Downloads/GenerativeDoodleArt_VisionOS-main/Packages/RealityKitContent" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../../../Downloads/GenerativeDoodleArt_VisionOS-main/Packages/RealityKitContent";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		29FB0FE32DA539C2005036B2 /* RealityKitContent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RealityKitContent;
+		};
+		29FB10402DAB04B1005036B2 /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;
 		};
