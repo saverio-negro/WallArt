@@ -13,6 +13,7 @@ class ViewModel {
     var flowState = FlowState.idle
     var immersiveSpaceState = ImmersiveSpaceState.closed
     
+    
     @MainActor
     func toggleImmersiveSpace() async {
         switch immersiveSpaceState {
