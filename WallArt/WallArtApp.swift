@@ -17,6 +17,9 @@ struct WallArtApp: App {
         WindowGroup {
             ContentView()
                 .environment(viewModel)
+                .onAppear {
+                    run()
+                }
         }
         .windowStyle(.plain)
 

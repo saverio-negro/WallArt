@@ -8,6 +8,7 @@
 import SwiftUI
 import RealityKit
 import RealityKitContent
+import Combine
 
 struct ImmersiveView: View {
     
@@ -18,6 +19,10 @@ struct ImmersiveView: View {
     
     @State private var assistant: Entity? = nil
     @State private var waveAnimation: AnimationResource? = nil
+    
+    @State private var showAttachmentButtons = false
+    @State var tapPublisher = PassthroughSubject<Void, Never>()
+    @State var cancellableSubscriber: Cancellable?
     
     var attachment: some View {
         // SwiftUI attachments
@@ -31,6 +36,38 @@ struct ImmersiveView: View {
         }
         // Show text field when character gets tapped
         .opacity(showTextField ? 1 : 0)
+        .animation(Animation.easeInOut(duration: 0.3), value: showTextField)
+    }
+    
+    var attachmentButtons: some View {
+        // SwiftUI attachment buttons
+        HStack(spacing: 20) {
+            Button {
+                tapPublisher.send()
+            } label: {
+                Text("Yes, let's go!")
+                    .font(.largeTitle)
+                    .fontWeight(.regular)
+                    .padding()
+                    .cornerRadius(8)
+            }
+            .padding()
+            .buttonStyle(.bordered)
+            Button {
+                // Action for the No button
+            } label: {
+                Text("No")
+                    .font(.largeTitle)
+                    .fontWeight(.regular)
+                    .padding()
+                    .cornerRadius(8)
+            }
+            .padding()
+            .buttonStyle(.bordered)
+        }
+        .glassBackgroundEffect()
+        .opacity(showAttachmentButtons ? 1 : 0)
+        .animation(Animation.easeInOut(duration: 0.3), value: showAttachmentButtons)
     }
     
     @State var characterEntity: Entity = {
@@ -80,6 +117,14 @@ struct ImmersiveView: View {
                 attachmentEntity.rotateEntityAroundYAxisByMatrix(angle: radians)
                 characterEntity.addChild(attachmentEntity)
                 
+//                // Load in SwiftUI Attachment Buttons
+//                guard let attachmentButtonsEntity = attachments.entity(for: "attachmentButtons") else {
+//                    fatalError("Failed to create attachment entity.")
+//                }
+//                attachmentButtonsEntity.position = SIMD3<Float>(0, 0.5, 0)
+//                attachmentButtonsEntity.rotateEntityAroundYAxisByMatrix(angle: radians)
+//                characterEntity.addChild(attachmentButtonsEntity)
+                
                 // Load in `characterAnimationsSceneEntity` containing models holding a specific character animation
                 let characterAnimationsSceneEntity = try await Entity(named: "CharacterAnimations", in: realityKitContentBundle)
                 
@@ -112,6 +157,9 @@ struct ImmersiveView: View {
             // wrapping the content of type `View`
             Attachment(id: "attachment") {
                 self.attachment
+                if showAttachmentButtons {
+                    self.attachmentButtons
+                }
             }
         }
         .gesture(
@@ -163,14 +211,20 @@ struct ImmersiveView: View {
         
         // Show dialog box
         if !showTextField {
-            withAnimation(Animation.easeInOut(duration: 0.5)) {
                 showTextField.toggle()
-            }
         }
         
         guard let assistant = self.assistant, let waveAnimation = self.waveAnimation else { return }
         
         assistant.playAnimation(waveAnimation.repeat(count: 1))
+    }
+    
+    func waitForButtonTap() async {
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            cancellableSubscriber = tapPublisher.sink { _ in
+                continuation.resume()
+            }
+        }
     }
     
     func playIntroSequence() async {
@@ -186,6 +240,14 @@ struct ImmersiveView: View {
         async let animatePromptText: Void = animatePromptText(text: texts[0])
         
         _ = await (showTextAndWaveAnimate, animatePromptText)
+            
+        showAttachmentButtons = true
+        
+        await waitForButtonTap()
+        
+        showAttachmentButtons = false
+        
+        await self.animatePromptText(text: texts[1])
     }
 }
 
